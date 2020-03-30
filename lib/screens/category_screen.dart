@@ -119,7 +119,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               RoundedButton(
                 color: Colors.lightBlueAccent,
-                title: 'Go treture hunt',
+                title: 'Go treasure hunt',
                 onPressed: () {
                   //Navigator.pushNamed(context, LoginScreen.id);
                 },
