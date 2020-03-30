@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>527368170577-f0mesr8rbo8ahbqb6c6i3ljmfugjb8in.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.527368170577-f0mesr8rbo8ahbqb6c6i3ljmfugjb8in</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>527368170577-go4vr5t0an5aslrvooa8nfn6mh0ggsah.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDoGlyFPsSGbMj7E7BHjEjwXhWl07HA74w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>527368170577</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mengzhou122.hypergaragesale</string>
+	<key>PROJECT_ID</key>
+	<string>neu-spring2020</string>
+	<key>STORAGE_BUCKET</key>
+	<string>neu-spring2020.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:527368170577:ios:0cbdd48e393d479ea75c70</string>
+	<key>DATABASE_URL</key>
+	<string>https://neu-spring2020.firebaseio.com</string>
+</dict>
+</plist>
