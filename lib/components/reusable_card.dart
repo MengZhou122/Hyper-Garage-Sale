@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hypergaragesale/components/constants.dart';
 
 class ReusableCard extends StatelessWidget {
-  ReusableCard({@required this.color, this.childCard, this.onPress});
+  ReusableCard({@required this.choose, this.childCard, this.onPress});
 
-  final Color color;
+  final bool choose;
   final Widget childCard;
   final Function onPress;
 
@@ -15,7 +16,7 @@ class ReusableCard extends StatelessWidget {
         child: childCard,
         margin: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
-          color: color,
+          color: choose ? kActiveCardColor : kInactiveCardColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),

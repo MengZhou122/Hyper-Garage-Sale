@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kActiveCardColor = Color(0xFF808080);
+const kActiveCardColor = Color(0xFFA9A9A9);
 const kInactiveCardColor = Color(0xFFD3D3D3);
 
 const kSendButtonTextStyle = TextStyle(
