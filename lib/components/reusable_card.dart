@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:hypergaragesale/components/constants.dart';
 
 class ReusableCard extends StatelessWidget {
-  ReusableCard({@required this.choose, this.childCard, this.onPress});
+  ReusableCard({@required this.choose, this.childIcon, this.onPress});
 
   final bool choose;
-  final Widget childCard;
+  final Widget childIcon;
   final Function onPress;
 
   @override
@@ -13,8 +13,8 @@ class ReusableCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        child: childCard,
-        margin: EdgeInsets.all(15.0),
+        child: childIcon,
+        margin: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: choose ? kActiveCardColor : kInactiveCardColor,
           borderRadius: BorderRadius.circular(10.0),

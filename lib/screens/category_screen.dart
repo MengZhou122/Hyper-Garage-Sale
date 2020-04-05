@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,7 +6,24 @@ import 'package:hypergaragesale/components/icon_content.dart';
 import 'package:hypergaragesale/components/reusable_card.dart';
 import 'package:hypergaragesale/components/rounded_button.dart';
 
+//final _firestore = Firestore.instance;
+FirebaseUser loggedInUser;
+
 class CategoryScreen extends StatefulWidget {
+  final _auth = FirebaseAuth.instance;
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   static const String id = 'category_screen';
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -17,22 +35,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: null,
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                widget._auth.signOut();
+                Navigator.pop(context);
+              }),
+        ],
+        title: Text('Category'),
+        backgroundColor: Colors.lightBlueAccent,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       child: ReusableCard(
                         choose: selectItem == 1,
-                        childCard: IconContent(
+                        childIcon: IconContent(
                             icon: FontAwesomeIcons.laptop,
-                            label: '3C Products'),
+                            label: 'Electronics'),
                         onPress: () {
                           setState(() {
                             selectItem = 1;
@@ -43,7 +72,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     Expanded(
                       child: ReusableCard(
                         choose: selectItem == 2,
-                        childCard: IconContent(
+                        childIcon: IconContent(
                             icon: FontAwesomeIcons.tools, label: 'Tools'),
                         onPress: () {
                           setState(() {
@@ -57,12 +86,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       child: ReusableCard(
                         choose: selectItem == 3,
-                        childCard: IconContent(
+                        childIcon: IconContent(
                             icon: FontAwesomeIcons.tshirt, label: 'Clothes'),
                         onPress: () {
                           setState(() {
@@ -74,7 +102,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     Expanded(
                       child: ReusableCard(
                         choose: selectItem == 4,
-                        childCard: IconContent(
+                        childIcon: IconContent(
                             icon: FontAwesomeIcons.book, label: 'Books'),
                         onPress: () {
                           setState(() {
@@ -88,12 +116,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       child: ReusableCard(
                         choose: selectItem == 5,
-                        childCard: IconContent(
+                        childIcon: IconContent(
                             icon: FontAwesomeIcons.couch, label: 'Furnitures'),
                         onPress: () {
                           setState(() {
@@ -105,7 +132,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     Expanded(
                       child: ReusableCard(
                         choose: selectItem == 6,
-                        childCard: IconContent(
+                        childIcon: IconContent(
                             icon: FontAwesomeIcons.plane, label: 'Toys'),
                         onPress: () {
                           setState(() {

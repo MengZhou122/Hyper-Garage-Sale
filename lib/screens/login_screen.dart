@@ -88,6 +88,47 @@ class _LoginScreenState extends State<LoginScreen> {
                         showSpinner = false;
                       });
                       print(e);
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => SingleChildScrollView(
+                                padding: EdgeInsets.all(30.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'Sign In Failed!',
+                                      style: TextStyle(
+                                          fontSize: 25.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      height: 15.0,
+                                    ),
+                                    Text(
+                                      'Incorrect username or password',
+                                      style: TextStyle(fontSize: 22.0),
+                                    ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    FlatButton(
+                                      color: Colors.lightBlueAccent,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(30.0))),
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ));
                     }
                   }),
             ],
