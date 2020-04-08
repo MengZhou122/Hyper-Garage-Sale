@@ -1,50 +1,26 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hypergaragesale/components/icon_content.dart';
 import 'package:hypergaragesale/components/reusable_card.dart';
 import 'package:hypergaragesale/components/rounded_button.dart';
-
-//final _firestore = Firestore.instance;
-FirebaseUser loggedInUser;
+import 'package:hypergaragesale/screens/item_list_screen.dart';
+import 'package:hypergaragesale/screens/post_screen.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final _auth = FirebaseAuth.instance;
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   static const String id = 'category_screen';
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  int selectItem = 0;
+  String selectedCategory = 'unselected';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: null,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                widget._auth.signOut();
-                Navigator.pop(context);
-              }),
-        ],
         title: Text('Category'),
         backgroundColor: Colors.lightBlueAccent,
       ),
@@ -58,25 +34,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: <Widget>[
                     Expanded(
                       child: ReusableCard(
-                        choose: selectItem == 1,
+                        choose: selectedCategory == 'electronics',
                         childIcon: IconContent(
                             icon: FontAwesomeIcons.laptop,
                             label: 'Electronics'),
                         onPress: () {
                           setState(() {
-                            selectItem = 1;
+                            selectedCategory = 'electronics';
                           });
                         },
                       ),
                     ),
                     Expanded(
                       child: ReusableCard(
-                        choose: selectItem == 2,
+                        choose: selectedCategory == 'tools',
                         childIcon: IconContent(
                             icon: FontAwesomeIcons.tools, label: 'Tools'),
                         onPress: () {
                           setState(() {
-                            selectItem = 2;
+                            selectedCategory = 'tools';
                           });
                         },
                       ),
@@ -89,24 +65,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: <Widget>[
                     Expanded(
                       child: ReusableCard(
-                        choose: selectItem == 3,
+                        choose: selectedCategory == 'clothes',
                         childIcon: IconContent(
                             icon: FontAwesomeIcons.tshirt, label: 'Clothes'),
                         onPress: () {
                           setState(() {
-                            selectItem = 3;
+                            selectedCategory = 'clothes';
                           });
                         },
                       ),
                     ),
                     Expanded(
                       child: ReusableCard(
-                        choose: selectItem == 4,
+                        choose: selectedCategory == 'books',
                         childIcon: IconContent(
                             icon: FontAwesomeIcons.book, label: 'Books'),
                         onPress: () {
                           setState(() {
-                            selectItem = 4;
+                            selectedCategory = 'books';
                           });
                         },
                       ),
@@ -119,24 +95,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   children: <Widget>[
                     Expanded(
                       child: ReusableCard(
-                        choose: selectItem == 5,
+                        choose: selectedCategory == 'furnitures',
                         childIcon: IconContent(
                             icon: FontAwesomeIcons.couch, label: 'Furnitures'),
                         onPress: () {
                           setState(() {
-                            selectItem = 5;
+                            selectedCategory = 'furnitures';
                           });
                         },
                       ),
                     ),
                     Expanded(
                       child: ReusableCard(
-                        choose: selectItem == 6,
+                        choose: selectedCategory == 'toys',
                         childIcon: IconContent(
                             icon: FontAwesomeIcons.plane, label: 'Toys'),
                         onPress: () {
                           setState(() {
-                            selectItem = 6;
+                            selectedCategory = 'toys';
                           });
                         },
                       ),
@@ -148,14 +124,87 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 color: Colors.lightBlueAccent,
                 title: 'Go treasure hunt',
                 onPressed: () {
-                  //Navigator.pushNamed(context, LoginScreen.id);
+                  if (selectedCategory == 'unselected') {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => SingleChildScrollView(
+                              padding: EdgeInsets.all(30.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    'Select a catagory first!',
+                                    style: TextStyle(fontSize: 22.0),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  FlatButton(
+                                    color: Colors.lightBlueAccent,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30.0))),
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ));
+                  } else {
+                    Navigator.pushNamed(context, ItemListScreen.id);
+                    //TODO: need to add category info (seletedItem) in to the ItemListScreen builder
+                  }
                 },
               ),
               RoundedButton(
                 color: Colors.blueAccent,
                 title: 'Make a new post',
                 onPressed: () {
-                  //Navigator.pushNamed(context, RegistrationScreen.id);
+                  if (selectedCategory == 'unselected') {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => SingleChildScrollView(
+                        padding: EdgeInsets.all(30.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Select a catagory first!',
+                              style: TextStyle(fontSize: 22.0),
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            FlatButton(
+                              color: Colors.lightBlueAccent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),
+                              child: Text(
+                                'OK',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(context, _createRoute());
+                    //TODO: need to add catagory info into the PostScreen builber
+                  }
                 },
               ),
             ],
@@ -164,4 +213,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
     );
   }
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => PostScreen(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return child;
+    },
+  );
 }
