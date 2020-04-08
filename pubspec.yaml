@@ -8,6 +8,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  camera:
+  path_provider:
+  path:
+  fluttertoast:
 
   cupertino_icons: ^0.1.2
   animated_text_kit: ^2.0.0
