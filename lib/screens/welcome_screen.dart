@@ -71,7 +71,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             RoundedButton(
               color: Colors.lightBlueAccent,
-              title: 'I am a member',
+              title: 'I Am A Member',
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.id);
               },
@@ -81,7 +81,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             RoundedButton(
               color: Colors.blueAccent,
-              title: 'Not a member yet',
+              title: 'Become A Member',
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.id);
               },

@@ -24,18 +24,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
         leading: null,
         backgroundColor: Colors.lightBlueAccent,
         title: Text('  Category'),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.remove_shopping_cart),
-              onPressed: () {
-                //_auth.signOut();
-                Navigator.pop(context);
-              }),
-        ],
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           child: Column(
             children: [
               Expanded(
@@ -182,7 +174,7 @@ void noCategoryNotification(context) {
       child: Column(
         children: <Widget>[
           Text(
-            'Select a catagory first!',
+            'Please Select a Category!',
             style: TextStyle(fontSize: 22.0),
           ),
           SizedBox(

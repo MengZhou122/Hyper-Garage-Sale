@@ -30,9 +30,9 @@ class CameraScreenState extends State<CameraScreen> {
     print(cameras.length);
     camera = cameras.first;
     if (camera == null) {
-      print('not first');
+      print('not first camera found');
     } else {
-      print('Yeah, first');
+      print('Yeah, first camera found');
     }
   }
 
@@ -99,14 +99,10 @@ class CameraScreenState extends State<CameraScreen> {
 
             // Attempt to take a picture and log where it's been saved.
             await _controller.takePicture(path);
-            final res = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PicturePreviewScreen(),
-                //(imagePath: path),
-              ),
-            );
-            Navigator.pop(context, res);
+            Navigator.pushNamed(context, PicturePreviewScreen.id);
+//            final res =
+////                await Navigator.pushNamed(context, PicturePreviewScreen.id);
+            //Navigator.pop(context, res);
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);

@@ -21,7 +21,9 @@ class TextCard extends StatelessWidget {
     return TextField(
       showCursor: true,
       autofocus: true,
-      keyboardType: numberKeyboard ? TextInputType.number : TextInputType.text,
+      keyboardType: numberKeyboard
+          ? TextInputType.numberWithOptions(decimal: true)
+          : TextInputType.text,
       minLines: description ? 1 : 1,
       maxLines: description ? 10 : 1,
       onChanged: textIn,

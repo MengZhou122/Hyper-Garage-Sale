@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     Text(
                                       'Incorrect username or password',
-                                      style: TextStyle(fontSize: 22.0),
+                                      style: TextStyle(fontSize: 20.0),
                                     ),
                                     SizedBox(
                                       height: 20.0,
