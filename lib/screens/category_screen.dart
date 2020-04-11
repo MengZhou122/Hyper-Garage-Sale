@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hypergaragesale/components/icon_content.dart';
 import 'package:hypergaragesale/components/reusable_card.dart';
@@ -21,12 +22,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: null,
-        title: Text('Category'),
         backgroundColor: Colors.lightBlueAccent,
+        title: Text('  Category'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.remove_shopping_cart),
+              onPressed: () {
+                //_auth.signOut();
+                Navigator.pop(context);
+              }),
+        ],
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           child: Column(
             children: [
               Expanded(
@@ -120,90 +129,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ],
                 ),
               ),
+              SizedBox(height: 5.0),
               RoundedButton(
                 color: Colors.lightBlueAccent,
-                title: 'Go treasure hunt',
+                title: 'Go Treasure Hunt',
                 onPressed: () {
                   if (selectedCategory == 'unselected') {
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => SingleChildScrollView(
-                              padding: EdgeInsets.all(30.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Select a catagory first!',
-                                    style: TextStyle(fontSize: 22.0),
-                                  ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  FlatButton(
-                                    color: Colors.lightBlueAccent,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(30.0))),
-                                    child: Text(
-                                      'OK',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ));
+                    noCategoryNotification(context);
                   } else {
-                    Navigator.pushNamed(context, ItemListScreen.id);
-                    //TODO: need to add category info (seletedItem) in to the ItemListScreen builder
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ItemListScreen(category: selectedCategory),
+                      ),
+                    );
                   }
                 },
               ),
+              SizedBox(height: 5.0),
               RoundedButton(
                 color: Colors.blueAccent,
-                title: 'Make a new post',
+                title: 'Make a New Post',
                 onPressed: () {
                   if (selectedCategory == 'unselected') {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => SingleChildScrollView(
-                        padding: EdgeInsets.all(30.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'Select a catagory first!',
-                              style: TextStyle(fontSize: 22.0),
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            FlatButton(
-                              color: Colors.lightBlueAccent,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
-                              child: Text(
-                                'OK',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        ),
+                    noCategoryNotification(context);
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PostScreen(category: selectedCategory),
                       ),
                     );
-                  } else {
-                    Navigator.push(context, _createRoute());
-                    //TODO: need to add catagory info into the PostScreen builber
                   }
                 },
               ),
@@ -215,11 +173,36 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 }
 
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => PostScreen(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return child;
-    },
+void noCategoryNotification(context) {
+  showModalBottomSheet(
+    isScrollControlled: true,
+    context: context,
+    builder: (context) => SingleChildScrollView(
+      padding: EdgeInsets.all(30.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            'Select a catagory first!',
+            style: TextStyle(fontSize: 22.0),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          FlatButton(
+            color: Colors.lightBlueAccent,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30.0))),
+            child: Text(
+              'OK',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    ),
   );
 }

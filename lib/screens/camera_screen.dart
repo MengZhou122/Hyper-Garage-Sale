@@ -1,4 +1,3 @@
-// A screen that allows users to take a picture using a given camera.
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hypergaragesale/screens/picture_preview.dart';
@@ -7,12 +6,13 @@ import 'package:path_provider/path_provider.dart';
 
 class CameraScreen extends StatefulWidget {
   static String id = 'camera_screen';
-  final CameraDescription camera;
 
-  const CameraScreen({
-    Key key,
-    @required this.camera,
-  }) : super(key: key);
+//  final CameraDescription camera;
+//
+//  const CameraScreen({
+//    Key key,
+//    this.camera,
+//  }) : super(key: key);
 
   @override
   CameraScreenState createState() => CameraScreenState();
@@ -20,19 +20,30 @@ class CameraScreen extends StatefulWidget {
 
 class CameraScreenState extends State<CameraScreen> {
   String image_path;
+  CameraDescription camera;
 
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
+  Future<void> getCamera() async {
+    final cameras = await availableCameras();
+    print(cameras.length);
+    camera = cameras.first;
+    if (camera == null) {
+      print('not first');
+    } else {
+      print('Yeah, first');
+    }
+  }
+
   @override
-  void initState() {
+  Future<void> initState() {
     super.initState();
+    getCamera();
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      widget.camera,
-      // Define the resolution to use.
+      camera,
       ResolutionPreset.medium,
     );
 
@@ -51,12 +62,10 @@ class CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Take a Picture'),
-        backgroundColor: Colors.lightBlueAccent,
-      ),
-      // Wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner
-      // until the controller has finished initializing.
+          title: Text('Take a Picture'),
+          backgroundColor: Colors.lightBlueAccent),
+      // Wait until the controller is initialized before displaying the camera preview.
+      // Use a FutureBuilder to display spinner until finished initializing.
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {

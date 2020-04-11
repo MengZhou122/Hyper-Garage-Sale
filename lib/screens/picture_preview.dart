@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:hypergaragesale/screens/camera_screen.dart';
 
 class PicturePreviewScreen extends StatelessWidget {
   static String id = "picture";
@@ -32,13 +31,13 @@ class PicturePreviewScreen extends StatelessWidget {
                     onPressed: () async {
                       final cameras = await availableCameras();
                       final firstCamera = cameras.first;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CameraScreen(camera: firstCamera),
-                        ),
-                      );
+//                      Navigator.push(
+//                        context,
+//                        MaterialPageRoute(
+//                          builder: (context) =>
+//                              CameraScreen(camera: firstCamera),
+//                        ),
+//                      );
                     },
                     textColor: Colors.white,
                     child: Text(

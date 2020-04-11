@@ -14,10 +14,14 @@ dependencies:
   fluttertoast:
 
   cupertino_icons: ^0.1.2
-  animated_text_kit: ^2.0.0
   firebase_core: ^0.4.0+3
   firebase_auth: ^0.15.5+3
   cloud_firestore: ^0.11.0
+  firebase_storage: ^3.0.6
+
+  location: ^3.0.2
+  geocoder: ^0.2.1
+
   modal_progress_hud: ^0.1.3
   font_awesome_flutter: ^8.4.0
 

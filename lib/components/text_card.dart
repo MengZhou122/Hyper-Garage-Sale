@@ -18,7 +18,7 @@ class TextCard extends StatelessWidget {
     return TextField(
       showCursor: true,
       autofocus: true,
-      minLines: description == true ? 3 : 1,
+      minLines: description == true ? 1 : 1,
       maxLines: description == true ? 10 : 1,
       onChanged: textIn,
       decoration: InputDecoration(

@@ -2,10 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'category_screen.dart';
+
 FirebaseUser loggedInUser;
 
 class ItemListScreen extends StatefulWidget {
   static const String id = 'item__list_screen';
+  final String category;
+
+  ItemListScreen({this.category});
 
   @override
   _ItemListScreenState createState() => _ItemListScreenState();
@@ -44,7 +49,8 @@ class _ItemListScreenState extends State<ItemListScreen> {
               icon: Icon(Icons.close),
               onPressed: () {
                 _auth.signOut();
-                Navigator.pop(context);
+                Navigator.of(context)
+                    .popUntil(ModalRoute.withName(CategoryScreen.id));
               }),
         ],
         title: Text('Items List'),
