@@ -13,13 +13,15 @@ class HyperGS extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: CategoryScreen.id, //CategoryScreen.id,
+      initialRoute: PostScreen.id, //CategoryScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         CategoryScreen.id: (context) => CategoryScreen(),
-        PostScreen.id: (context) => PostScreen(),
+        PostScreen.id: (context) => PostScreen(
+              category: 'aaa',
+            ),
         //delete after complete
         ItemListScreen.id: (context) => ItemListScreen(),
         //delete after complete

@@ -132,6 +132,7 @@ class _PostScreenState extends State<PostScreen> {
                 SizedBox(height: 10.0),
                 TextCard(
                     label: 'Year',
+                    numberKeyboard: true,
                     textIn: (newYear) {
                       newPost.name = newYear;
                     }),
@@ -139,6 +140,7 @@ class _PostScreenState extends State<PostScreen> {
                 TextCard(
                     label: 'Price',
                     price: true,
+                    numberKeyboard: true,
                     textIn: (newPrice) {
                       newPost.name = newPrice;
                     }),

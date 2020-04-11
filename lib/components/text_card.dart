@@ -4,13 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class TextCard extends StatelessWidget {
   final String label;
   final bool price;
+  final bool numberKeyboard;
   final bool description;
   final Function textIn;
+
   TextCard({
     @required this.label,
     @required this.textIn,
     this.price,
-    this.description,
+    this.description = false,
+    this.numberKeyboard = false,
   });
 
   @override
@@ -18,8 +21,9 @@ class TextCard extends StatelessWidget {
     return TextField(
       showCursor: true,
       autofocus: true,
-      minLines: description == true ? 1 : 1,
-      maxLines: description == true ? 10 : 1,
+      keyboardType: numberKeyboard ? TextInputType.number : TextInputType.text,
+      minLines: description ? 1 : 1,
+      maxLines: description ? 10 : 1,
       onChanged: textIn,
       decoration: InputDecoration(
         prefixIcon: price == true
