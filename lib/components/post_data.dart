@@ -1,10 +1,8 @@
 class PostData {
   String user = '';
   String category = '';
-  String brand = '';
-  String name = '';
+  String title = '';
   String price = '';
-  String year = '';
   String description = '';
   String address = 'address';
 

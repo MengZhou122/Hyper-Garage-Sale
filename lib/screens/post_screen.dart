@@ -118,23 +118,9 @@ class _PostScreenState extends State<PostScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 TextCard(
-                    label: 'Name',
-                    textIn: (newName) {
-                      newPost.name = newName;
-                    }),
-                SizedBox(height: 10.0),
-                TextCard(
-                  label: 'Brand',
-                  textIn: (newBrand) {
-                    newPost.brand = newBrand;
-                  },
-                ),
-                SizedBox(height: 10.0),
-                TextCard(
-                    label: 'Year',
-                    numberKeyboard: true,
-                    textIn: (newYear) {
-                      newPost.name = newYear;
+                    label: 'Title',
+                    textIn: (newTitle) {
+                      newPost.title = newTitle;
                     }),
                 SizedBox(height: 10.0),
                 TextCard(
@@ -142,7 +128,7 @@ class _PostScreenState extends State<PostScreen> {
                     price: true,
                     numberKeyboard: true,
                     textIn: (newPrice) {
-                      newPost.name = newPrice;
+                      newPost.price = newPrice;
                     }),
                 SizedBox(height: 10.0),
                 TextCard(

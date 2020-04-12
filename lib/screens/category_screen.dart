@@ -33,30 +33,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: ReusableCard(
-                        choose: selectedCategory == 'electronics',
-                        childIcon: IconContent(
-                            icon: FontAwesomeIcons.laptop,
-                            label: 'Electronics'),
-                        onPress: () {
-                          setState(() {
-                            selectedCategory = 'electronics';
-                          });
-                        },
-                      ),
+                    ReusableCard(
+                      choose: selectedCategory == 'electronics',
+                      childIcon: IconContent(
+                          icon: FontAwesomeIcons.laptop, label: 'Electronics'),
+                      onPress: () {
+                        setState(() {
+                          selectedCategory = 'electronics';
+                        });
+                      },
                     ),
-                    Expanded(
-                      child: ReusableCard(
-                        choose: selectedCategory == 'tools',
-                        childIcon: IconContent(
-                            icon: FontAwesomeIcons.tools, label: 'Tools'),
-                        onPress: () {
-                          setState(() {
-                            selectedCategory = 'tools';
-                          });
-                        },
-                      ),
+                    ReusableCard(
+                      choose: selectedCategory == 'tools',
+                      childIcon: IconContent(
+                          icon: FontAwesomeIcons.tools, label: 'Tools'),
+                      onPress: () {
+                        setState(() {
+                          selectedCategory = 'tools';
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -64,29 +59,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: ReusableCard(
-                        choose: selectedCategory == 'clothes',
-                        childIcon: IconContent(
-                            icon: FontAwesomeIcons.tshirt, label: 'Clothes'),
-                        onPress: () {
-                          setState(() {
-                            selectedCategory = 'clothes';
-                          });
-                        },
-                      ),
+                    ReusableCard(
+                      choose: selectedCategory == 'clothes',
+                      childIcon: IconContent(
+                          icon: FontAwesomeIcons.tshirt, label: 'Clothes'),
+                      onPress: () {
+                        setState(() {
+                          selectedCategory = 'clothes';
+                        });
+                      },
                     ),
-                    Expanded(
-                      child: ReusableCard(
-                        choose: selectedCategory == 'books',
-                        childIcon: IconContent(
-                            icon: FontAwesomeIcons.book, label: 'Books'),
-                        onPress: () {
-                          setState(() {
-                            selectedCategory = 'books';
-                          });
-                        },
-                      ),
+                    ReusableCard(
+                      choose: selectedCategory == 'books',
+                      childIcon: IconContent(
+                          icon: FontAwesomeIcons.book, label: 'Books'),
+                      onPress: () {
+                        setState(() {
+                          selectedCategory = 'books';
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -94,29 +85,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: ReusableCard(
-                        choose: selectedCategory == 'furnitures',
-                        childIcon: IconContent(
-                            icon: FontAwesomeIcons.couch, label: 'Furnitures'),
-                        onPress: () {
-                          setState(() {
-                            selectedCategory = 'furnitures';
-                          });
-                        },
-                      ),
+                    ReusableCard(
+                      choose: selectedCategory == 'furnitures',
+                      childIcon: IconContent(
+                          icon: FontAwesomeIcons.couch, label: 'Furnitures'),
+                      onPress: () {
+                        setState(() {
+                          selectedCategory = 'furnitures';
+                        });
+                      },
                     ),
-                    Expanded(
-                      child: ReusableCard(
-                        choose: selectedCategory == 'toys',
-                        childIcon: IconContent(
-                            icon: FontAwesomeIcons.plane, label: 'Toys'),
-                        onPress: () {
-                          setState(() {
-                            selectedCategory = 'toys';
-                          });
-                        },
-                      ),
+                    ReusableCard(
+                      choose: selectedCategory == 'toys',
+                      childIcon: IconContent(
+                          icon: FontAwesomeIcons.plane, label: 'Toys'),
+                      onPress: () {
+                        setState(() {
+                          selectedCategory = 'toys';
+                        });
+                      },
                     ),
                   ],
                 ),

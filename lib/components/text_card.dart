@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TextCard extends StatelessWidget {
   final String label;
@@ -25,15 +24,10 @@ class TextCard extends StatelessWidget {
           ? TextInputType.numberWithOptions(decimal: true)
           : TextInputType.text,
       minLines: description ? 1 : 1,
-      maxLines: description ? 10 : 1,
+      maxLines: description ? 5 : 1,
       onChanged: textIn,
       decoration: InputDecoration(
-        prefixIcon: price == true
-            ? Icon(
-                FontAwesomeIcons.dollarSign,
-                size: 17.0,
-              )
-            : null,
+        prefixIcon: price == true ? Icon(Icons.attach_money, size: 17.0) : null,
         border: OutlineInputBorder(),
         labelText: label,
       ),

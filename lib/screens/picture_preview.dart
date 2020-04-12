@@ -1,12 +1,14 @@
-import 'package:camera/camera.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:hypergaragesale/components/rounded_button.dart';
 import 'package:hypergaragesale/screens/post_screen.dart';
 
 class PicturePreviewScreen extends StatelessWidget {
   static String id = "picture";
-  //final String imagePath;
+  final String imagePath;
 
-  //const PicturePreviewScreen({Key key, this.imagePath}) : super(key: key);
+  const PicturePreviewScreen({Key key, this.imagePath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,57 +17,26 @@ class PicturePreviewScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(child: Image.asset('images/logo.png')),
-            //Image.file(File(imagePath)),
+            Expanded(child: Image.file(File(imagePath))),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                ButtonTheme(
-                  height: 45.0,
-                  child: RaisedButton(
-                    elevation: 5.0,
-                    color: Colors.lightBlueAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Colors.lightBlueAccent),
-                    ),
-                    onPressed: () async {
-                      final cameras = await availableCameras();
-                      final firstCamera = cameras.first;
-
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                          builder: (context) =>
-//                              CameraScreen(camera: firstCamera),
-//                        ),
-//                      );
-                    },
-                    textColor: Colors.white,
-                    child: Text(
-                      'Retake a pciture',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ),
+                RoundedButton(
+                  title: 'Retake',
+                  color: Colors.lightBlueAccent,
+                  width: 100.0,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                ButtonTheme(
-                  height: 45.0,
-                  child: RaisedButton(
-                    elevation: 5.0,
-                    color: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .popUntil(ModalRoute.withName(PostScreen.id));
-                    },
-                    textColor: Colors.white,
-                    child: Text(
-                      'Use this pciture',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ),
+                RoundedButton(
+                  title: 'Use It',
+                  width: 100,
+                  color: Colors.blueAccent,
+                  onPressed: () {
+                    Navigator.of(context)
+                        .popUntil(ModalRoute.withName(PostScreen.id));
+                  },
                 ),
               ],
             ),
