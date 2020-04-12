@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:hypergaragesale/components/error_notification.dart';
 import 'package:hypergaragesale/components/post_data.dart';
+import 'package:hypergaragesale/components/rounded_button.dart';
 import 'package:hypergaragesale/components/text_card.dart';
 import 'package:hypergaragesale/screens/camera_screen.dart';
 import 'package:hypergaragesale/screens/item_list_screen.dart';
@@ -79,19 +82,23 @@ class _PostScreenState extends State<PostScreen> {
 
   void uploadImage() async {
     final StorageReference postImageRef =
-        FirebaseStorage.instance.ref().child("Post Images");
+        FirebaseStorage.instance.ref().child("zm_post_image");
 
     var timeKey = new DateTime.now();
 
-    final StorageUploadTask uploadTask = postImageRef
-        .child(timeKey.toString() + ".jpg")
-        .putFile(File(newPost.picture1));
+    for (String image_path in newPost.pictures) {
+      final StorageUploadTask uploadTask = postImageRef
+          .child(timeKey.toString() + ".jpg")
+          .putFile(File(image_path));
 
-    var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    setState(() {
-      url = ImageUrl;
-    });
-    print("Image url = " + url);
+      newPost.pictures.add(image_path);
+
+      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      setState(() {
+        url = ImageUrl;
+      });
+      print("Image url = " + url);
+    }
   }
 
   @override
@@ -112,11 +119,14 @@ class _PostScreenState extends State<PostScreen> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
+                SizedBox(
+                  height: 5.0,
+                ),
                 TextCard(
                     label: 'Title',
                     textIn: (newTitle) {
@@ -138,11 +148,11 @@ class _PostScreenState extends State<PostScreen> {
                       newPost.description = newDescription;
                     }),
                 SizedBox(height: 10.0),
-                Text('${newPost.address} ${newPost.latitude}'),
-                SizedBox(height: 10.0),
+                //Text('${newPost.address} ${newPost.latitude} ${newPost.longtitude}'),
                 TextCard(
                     label: 'Address',
                     description: true,
+                    address: newPost.address,
                     textIn: (newAddress) {
                       newPost.address = newAddress;
                     }),
@@ -153,9 +163,9 @@ class _PostScreenState extends State<PostScreen> {
                     FloatingActionButton(
                       child: Icon(Icons.room),
                       heroTag: 'address',
-                      onPressed: () {
-                        _getLocation();
-                        _updateAddress();
+                      onPressed: () async {
+                        await _getLocation();
+                        await _updateAddress();
                         setState(() {
                           newPost.latitude = _locationData.latitude;
                           newPost.longitude = _locationData.longitude;
@@ -164,58 +174,93 @@ class _PostScreenState extends State<PostScreen> {
                         //get address function, update the address widget
                       },
                     ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '👈 Get Address                  ',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        Text(
-                          '                Add a Picture 👉',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                      ],
-                    ),
+                    Text('       Add a Picture 👉',
+                        style: TextStyle(fontSize: 18.0)),
                     FloatingActionButton(
                       child: Icon(Icons.camera_alt),
                       heroTag: 'picture',
-                      onPressed: () {
-                        Navigator.pushNamed(context, CameraScreen.id);
+                      onPressed: () async {
+                        final cameras = await availableCameras();
+                        final camera = cameras.first;
+                        if (cameras == null || cameras.length == 0) {
+                          print('No Camera!!!!');
+                        }
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CameraScreen(camera: camera),
+                          ),
+                        );
+                        print(result);
+                        if (newPost.pictures.length == 4) {
+                          showErrorNotification(context, 'Maximun 4 Pictures!');
+                        } else {
+                          setState(() {
+                            newPost.pictures.add(result);
+                          });
+                        }
+                        //there is no camera on Simulator, cameras will be null，use NamedRoute instead
+                        //Navigator.pushNamed(context, CameraScreen.id);
                       },
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: newPost.picture1 == ""
-                      ? null
-                      : Image.file(
-                          File(newPost.picture1),
-                          width: 120,
-                          height: 120,
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                      child: newPost.pictures.length == 0
+                          ? null
+                          : Image.file(
+                              File(newPost.pictures[0]),
+                              height: 120,
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                      child: newPost.pictures.length <= 1
+                          ? null
+                          : Image.file(
+                              File(newPost.pictures[1]),
+                              height: 120,
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                      child: newPost.pictures.length <= 2
+                          ? null
+                          : Image.file(
+                              File(newPost.pictures[2]),
+                              height: 120,
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                      child: newPost.pictures.length <= 3
+                          ? null
+                          : Image.file(
+                              File(newPost.pictures[3]),
+                              height: 120,
+                            ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 10.0),
-                Material(
-                  color: Colors.lightBlueAccent,
-                  borderRadius: BorderRadius.circular(25.0),
-                  child: MaterialButton(
+                RoundedButton(
+                    title: 'Post',
+                    color: Colors.lightBlueAccent,
+                    width: 120,
                     onPressed: () {
-                      //
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ItemListScreen(
-                                    category: widget.category,
-                                  )));
-                    },
-                    minWidth: 120.0,
-                    child: Text(
-                      'Post',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
-                  ),
-                ),
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ItemListScreen(
+                            category: widget.category,
+                          ),
+                        ),
+                      );
+                    }),
               ],
             ),
           ),

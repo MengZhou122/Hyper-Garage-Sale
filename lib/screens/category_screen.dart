@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hypergaragesale/components/error_notification.dart';
 import 'package:hypergaragesale/components/icon_content.dart';
 import 'package:hypergaragesale/components/reusable_card.dart';
 import 'package:hypergaragesale/components/rounded_button.dart';
@@ -114,7 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 title: 'Go Treasure Hunt',
                 onPressed: () {
                   if (selectedCategory == 'unselected') {
-                    noCategoryNotification(context);
+                    showErrorNotification(context, 'Please Select a Category!');
                   } else {
                     Navigator.push(
                       context,
@@ -132,7 +133,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 title: 'Make a New Post',
                 onPressed: () {
                   if (selectedCategory == 'unselected') {
-                    noCategoryNotification(context);
+                    showErrorNotification(context, 'Please Select a Category!');
                   } else {
                     Navigator.push(
                       context,
@@ -150,38 +151,4 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
     );
   }
-}
-
-void noCategoryNotification(context) {
-  showModalBottomSheet(
-    isScrollControlled: true,
-    context: context,
-    builder: (context) => SingleChildScrollView(
-      padding: EdgeInsets.all(30.0),
-      child: Column(
-        children: <Widget>[
-          Text(
-            'Please Select a Category!',
-            style: TextStyle(fontSize: 22.0),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          FlatButton(
-            color: Colors.lightBlueAccent,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30.0))),
-            child: Text(
-              'OK',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    ),
-  );
 }

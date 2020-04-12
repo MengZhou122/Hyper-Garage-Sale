@@ -4,13 +4,10 @@ class PostData {
   String title = '';
   String price = '';
   String description = '';
-  String address = 'address';
+  String address = '👇 Get Address';
 
   double latitude;
   double longitude;
 
-  String picture1 = '';
-  String picture2 = '';
-  String picture3 = '';
-  String picture4 = '';
+  List<String> pictures = [];
 }

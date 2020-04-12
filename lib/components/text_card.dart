@@ -5,11 +5,13 @@ class TextCard extends StatelessWidget {
   final bool price;
   final bool numberKeyboard;
   final bool description;
+  final String address;
   final Function textIn;
 
   TextCard({
     @required this.label,
     @required this.textIn,
+    this.address,
     this.price,
     this.description = false,
     this.numberKeyboard = false,
@@ -27,6 +29,7 @@ class TextCard extends StatelessWidget {
       maxLines: description ? 5 : 1,
       onChanged: textIn,
       decoration: InputDecoration(
+        hintText: address,
         prefixIcon: price == true ? Icon(Icons.attach_money, size: 17.0) : null,
         border: OutlineInputBorder(),
         labelText: label,
