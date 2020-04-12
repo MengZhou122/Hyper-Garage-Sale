@@ -28,7 +28,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+          padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 10.0),
           child: Column(
             children: [
               Expanded(

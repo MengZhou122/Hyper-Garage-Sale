@@ -180,21 +180,22 @@ class _PostScreenState extends State<PostScreen> {
                       child: Icon(Icons.camera_alt),
                       heroTag: 'picture',
                       onPressed: () async {
-                        final cameras = await availableCameras();
-                        final camera = cameras.first;
-                        if (cameras == null || cameras.length == 0) {
-                          print('No Camera!!!!');
-                        }
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CameraScreen(camera: camera),
-                          ),
-                        );
-                        print(result);
                         if (newPost.pictures.length == 4) {
                           showErrorNotification(context, 'Maximun 4 Pictures!');
                         } else {
+                          final cameras = await availableCameras();
+                          final camera = cameras.first;
+                          if (cameras == null || cameras.length == 0) {
+                            print('No Camera!!!!');
+                          }
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CameraScreen(camera: camera),
+                            ),
+                          );
+                          print(result);
                           setState(() {
                             newPost.pictures.add(result);
                           });
@@ -205,46 +206,48 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
-                      child: newPost.pictures.length == 0
-                          ? null
-                          : Image.file(
-                              File(newPost.pictures[0]),
-                              height: 120,
-                            ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
-                      child: newPost.pictures.length <= 1
-                          ? null
-                          : Image.file(
-                              File(newPost.pictures[1]),
-                              height: 120,
-                            ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
-                      child: newPost.pictures.length <= 2
-                          ? null
-                          : Image.file(
-                              File(newPost.pictures[2]),
-                              height: 120,
-                            ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
-                      child: newPost.pictures.length <= 3
-                          ? null
-                          : Image.file(
-                              File(newPost.pictures[3]),
-                              height: 120,
-                            ),
-                    ),
-                  ],
+                SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        child: newPost.pictures.length == 0
+                            ? null
+                            : Image.file(
+                                File(newPost.pictures[0]),
+                                height: 120,
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        child: newPost.pictures.length <= 1
+                            ? null
+                            : Image.file(
+                                File(newPost.pictures[1]),
+                                height: 120,
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        child: newPost.pictures.length <= 2
+                            ? null
+                            : Image.file(
+                                File(newPost.pictures[2]),
+                                height: 120,
+                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        child: newPost.pictures.length <= 3
+                            ? null
+                            : Image.file(
+                                File(newPost.pictures[3]),
+                                height: 120,
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 10.0),
                 RoundedButton(
