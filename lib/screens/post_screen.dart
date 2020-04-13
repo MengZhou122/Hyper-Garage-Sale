@@ -59,7 +59,7 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+    await for (var snapshot in _firestore.collection('books').snapshots()) {
       for (var message in snapshot.documents) {
         print(message.data);
       }
@@ -76,7 +76,7 @@ class _PostScreenState extends State<PostScreen> {
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
-    print("${first.featureName} : ${first.addressLine}");
+    print('${first.featureName}');
     newPost.address = first.addressLine;
   }
 
@@ -125,7 +125,7 @@ class _PostScreenState extends State<PostScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 SizedBox(
-                  height: 5.0,
+                  height: 10.0,
                 ),
                 TextCard(
                     label: 'Title',
@@ -149,14 +149,19 @@ class _PostScreenState extends State<PostScreen> {
                     }),
                 SizedBox(height: 10.0),
                 //Text('${newPost.address} ${newPost.latitude} ${newPost.longtitude}'),
-                TextCard(
-                    label: 'Address',
-                    description: true,
-                    address: newPost.address,
-                    textIn: (newAddress) {
-                      newPost.address = newAddress;
-                    }),
-                SizedBox(height: 15.0),
+                Container(
+                    alignment: Alignment(-1.0, 0.0),
+                    height: 70.0,
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(3.0),
+                        color: Colors.white60),
+                    child: Wrap(children: [
+                      Text('${newPost.address}',
+                          style: TextStyle(fontSize: 16.0)),
+                    ])),
+                SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -169,7 +174,8 @@ class _PostScreenState extends State<PostScreen> {
                         setState(() {
                           newPost.latitude = _locationData.latitude;
                           newPost.longitude = _locationData.longitude;
-                          print('${newPost.latitude} : ${newPost.longitude}');
+                          print(
+                              '${newPost.address}, ${newPost.latitude}, ${newPost.longitude}');
                         });
                         //get address function, update the address widget
                       },
@@ -177,7 +183,7 @@ class _PostScreenState extends State<PostScreen> {
                     Text('       Add a Picture 👉',
                         style: TextStyle(fontSize: 18.0)),
                     FloatingActionButton(
-                      child: Icon(Icons.camera_alt),
+                      child: Icon(Icons.add_a_photo),
                       heroTag: 'picture',
                       onPressed: () async {
                         if (newPost.pictures.length == 4) {
@@ -206,49 +212,20 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 5.0),
                 Container(
-                  height: newPost.pictures.length == 0 ? 0.0 : 120.0,
+                  height: newPost.pictures.length == 0 ? 0.0 : 110.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: newPost.pictures.length == 0
-                              ? null
-                              : Image.file(
-                                  File(newPost.pictures[0]),
-                                ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: newPost.pictures.length <= 1
-                            ? null
-                            : Image.file(
-                                File(newPost.pictures[1]),
-                              ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: newPost.pictures.length <= 2
-                            ? null
-                            : Image.file(
-                                File(newPost.pictures[2]),
-                              ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: newPost.pictures.length <= 3
-                            ? null
-                            : Image.file(
-                                File(newPost.pictures[3]),
-                              ),
-                      ),
+                      PictureThumbnail(newPost: newPost, pictureNumber: 0),
+                      PictureThumbnail(newPost: newPost, pictureNumber: 1),
+                      PictureThumbnail(newPost: newPost, pictureNumber: 2),
+                      PictureThumbnail(newPost: newPost, pictureNumber: 3),
                     ],
                   ),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 5.0),
                 RoundedButton(
                     title: 'Post',
                     color: Colors.lightBlueAccent,
@@ -268,6 +245,22 @@ class _PostScreenState extends State<PostScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PictureThumbnail extends StatelessWidget {
+  PictureThumbnail({@required this.newPost, @required this.pictureNumber});
+  final PostData newPost;
+  final int pictureNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: newPost.pictures.length <= pictureNumber
+          ? null
+          : Image.file(File(newPost.pictures[pictureNumber])),
     );
   }
 }
