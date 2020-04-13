@@ -206,44 +206,43 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                   ],
                 ),
-                SingleChildScrollView(
+                Container(
+                  height: newPost.pictures.length == 0 ? 0.0 : 120.0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
-                        child: newPost.pictures.length == 0
-                            ? null
-                            : Image.file(
-                                File(newPost.pictures[0]),
-                                height: 120,
-                              ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: newPost.pictures.length == 0
+                              ? null
+                              : Image.file(
+                                  File(newPost.pictures[0]),
+                                ),
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        padding: const EdgeInsets.all(1.0),
                         child: newPost.pictures.length <= 1
                             ? null
                             : Image.file(
                                 File(newPost.pictures[1]),
-                                height: 120,
                               ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        padding: const EdgeInsets.all(1.0),
                         child: newPost.pictures.length <= 2
                             ? null
                             : Image.file(
                                 File(newPost.pictures[2]),
-                                height: 120,
                               ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(1.0, 5.0, 1.0, 5.0),
+                        padding: const EdgeInsets.all(1.0),
                         child: newPost.pictures.length <= 3
                             ? null
                             : Image.file(
                                 File(newPost.pictures[3]),
-                                height: 120,
                               ),
                       ),
                     ],
