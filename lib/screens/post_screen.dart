@@ -155,7 +155,7 @@ class _PostScreenState extends State<PostScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     decoration: BoxDecoration(
                         border: Border.all(),
-                        borderRadius: BorderRadius.circular(3.0),
+                        borderRadius: BorderRadius.circular(5.0),
                         color: Colors.white60),
                     child: Wrap(children: [
                       Text('${newPost.address}',
@@ -180,7 +180,10 @@ class _PostScreenState extends State<PostScreen> {
                         //get address function, update the address widget
                       },
                     ),
-                    Text('       Add a Picture 👉',
+                    Text(
+                        newPost.pictures.length == 0
+                            ? '       Add a Picture 👉'
+                            : ' Add another Picture 👉',
                         style: TextStyle(fontSize: 18.0)),
                     FloatingActionButton(
                       child: Icon(Icons.add_a_photo),
@@ -194,16 +197,18 @@ class _PostScreenState extends State<PostScreen> {
                           if (cameras == null || cameras.length == 0) {
                             print('No Camera!!!!');
                           }
-                          final result = await Navigator.push(
+                          final imagePath = await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
                                   CameraScreen(camera: camera),
                             ),
                           );
-                          print(result);
+                          print(imagePath);
                           setState(() {
-                            newPost.pictures.add(result);
+                            if (imagePath != null) {
+                              newPost.pictures.add(imagePath);
+                            }
                           });
                         }
                         //there is no camera on Simulator, cameras will be null，use NamedRoute instead
@@ -213,17 +218,14 @@ class _PostScreenState extends State<PostScreen> {
                   ],
                 ),
                 SizedBox(height: 5.0),
-                Container(
-                  height: newPost.pictures.length == 0 ? 0.0 : 110.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      PictureThumbnail(newPost: newPost, pictureNumber: 0),
-                      PictureThumbnail(newPost: newPost, pictureNumber: 1),
-                      PictureThumbnail(newPost: newPost, pictureNumber: 2),
-                      PictureThumbnail(newPost: newPost, pictureNumber: 3),
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    PictureThumbnail(newPost: newPost, pictureNumber: 0),
+                    PictureThumbnail(newPost: newPost, pictureNumber: 1),
+                    PictureThumbnail(newPost: newPost, pictureNumber: 2),
+                    PictureThumbnail(newPost: newPost, pictureNumber: 3),
+                  ],
                 ),
                 SizedBox(height: 5.0),
                 RoundedButton(
@@ -256,7 +258,9 @@ class PictureThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: 110.0,
+      width: 70.0,
       padding: const EdgeInsets.all(1.0),
       child: newPost.pictures.length <= pictureNumber
           ? null

@@ -59,14 +59,16 @@ class CameraScreenState extends State<CameraScreen> {
 
             print(path);
             await _controller.takePicture(path);
-            final res = await Navigator.push(
+            final imagePath = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => PicturePreviewScreen(imagePath: path),
               ),
             );
-            print(res);
-            Navigator.pop(context, res);
+            print(imagePath);
+            if (imagePath != null) {
+              Navigator.pop(context, imagePath);
+            }
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
