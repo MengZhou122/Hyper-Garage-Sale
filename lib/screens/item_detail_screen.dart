@@ -21,11 +21,16 @@ class ItemDetailScreen extends StatelessWidget {
             Text(infoList['user']),
             Text(infoList['title']),
             Text(infoList['price']),
-            Text(
-                infoList['description'] == null ? '' : infoList['description']),
-            Text(infoList['address'] == null ? '' : infoList['address']),
-            Text(infoList['longitude'] == null ? '' : infoList['longitude']),
-            Text(infoList['latitude'] == null ? '' : infoList['latitude']),
+            Text(infoList['description'] == null
+                ? ' '
+                : infoList['description']),
+            Text(infoList['address'] == null ? ' ' : infoList['address']),
+            Text(infoList['longitude'] == null ? ' ' : infoList['longitude']),
+            Text(infoList['latitude'] == null ? ' ' : infoList['latitude']),
+            Text(infoList['picture0'] == null ? 'no0' : infoList['picture0']),
+            Text(infoList['picture1'] == null ? 'no1' : infoList['picture1']),
+            Text(infoList['picture2'] == null ? 'no2' : infoList['lpicture2']),
+            Text(infoList['picture3'] == null ? 'no3' : infoList['lpicture3']),
             //Text(infoList['address']),
           ],
         ),

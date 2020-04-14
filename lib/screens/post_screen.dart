@@ -29,14 +29,13 @@ class _PostScreenState extends State<PostScreen> {
   Location userLocation = Location();
   LocationData _locationData;
   bool showSpinner = false;
+  List<Widget> thumbnails = [];
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
-  FirebaseUser loggedInUser;
+  //FirebaseUser loggedInUser;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
-  String url;
 
   @override
   void initState() {
@@ -89,22 +88,16 @@ class _PostScreenState extends State<PostScreen> {
 
   Future<void> uploadImage() async {
     final StorageReference postImageRef =
-        FirebaseStorage.instance.ref().child("zm_post_image");
+        FirebaseStorage.instance.ref().child("zm_post_images");
 
     var timeKey = new DateTime.now();
 
     for (String image_path in newPost.pictures) {
       final StorageUploadTask uploadTask = postImageRef
-          .child(timeKey.toString() + ".jpg")
+          .child(timeKey.toString() + ".png")
           .putFile(File(image_path));
 
       newPost.pictures.add(image_path);
-
-      var ImageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      setState(() {
-        url = ImageUrl;
-      });
-      print("Image url = " + url);
     }
   }
 
@@ -126,8 +119,12 @@ class _PostScreenState extends State<PostScreen> {
           'address': newPost.address,
           'longitude': newPost.longitude.toString(),
           'latitude': newPost.latitude.toString(),
-          //'image_path': url
+          'picture0': newPost.pictures.length > 0 ? newPost.pictures[0] : ' ',
+          'picture1': newPost.pictures.length >= 2 ? newPost.pictures[1] : ' ',
+          'picture2': newPost.pictures.length >= 3 ? newPost.pictures[2] : ' ',
+          'picture3': newPost.pictures.length == 4 ? newPost.pictures[3] : ' ',
         });
+
         titleController.clear();
         priceController.clear();
         descriptionController.clear();
@@ -226,7 +223,6 @@ class _PostScreenState extends State<PostScreen> {
                           print(
                               '${newPost.address}, ${newPost.latitude}, ${newPost.longitude}');
                         });
-                        //get address function, update the address widget
                       },
                     ),
                     Text(
@@ -257,6 +253,14 @@ class _PostScreenState extends State<PostScreen> {
                           setState(() {
                             if (imagePath != null) {
                               newPost.pictures.add(imagePath);
+
+                              Container pictureC = Container(
+                                height: 120.0,
+                                width: 80.0,
+                                padding: const EdgeInsets.all(1.0),
+                                child: Image.file(File(imagePath)),
+                              );
+                              thumbnails.add(pictureC);
                             }
                           });
                         }
@@ -267,12 +271,7 @@ class _PostScreenState extends State<PostScreen> {
                 SizedBox(height: 5.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    PictureThumbnail(newPost: newPost, pictureNumber: 0),
-                    PictureThumbnail(newPost: newPost, pictureNumber: 1),
-                    PictureThumbnail(newPost: newPost, pictureNumber: 2),
-                    PictureThumbnail(newPost: newPost, pictureNumber: 3),
-                  ],
+                  children: thumbnails,
                 ),
                 SizedBox(height: 5.0),
                 RoundedButton(
@@ -283,7 +282,6 @@ class _PostScreenState extends State<PostScreen> {
                     await uploadPost();
                     setState(() {
                       showSpinner = false;
-                      newPost.address;
                     });
                   },
                 ),
@@ -292,24 +290,6 @@ class _PostScreenState extends State<PostScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class PictureThumbnail extends StatelessWidget {
-  PictureThumbnail({@required this.newPost, @required this.pictureNumber});
-  final PostData newPost;
-  final int pictureNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 120.0,
-      width: 80.0,
-      padding: const EdgeInsets.all(1.0),
-      child: newPost.pictures.length <= pictureNumber
-          ? null
-          : Image.file(File(newPost.pictures[pictureNumber])),
     );
   }
 }

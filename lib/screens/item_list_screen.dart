@@ -128,7 +128,7 @@ class ItemBubble extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           child: Wrap(children: [
             Text(
-              '【${map['title']}】for \$${map['price']}',
+              '【${map['title']}】ask for \$${map['price']}',
               style: TextStyle(
                   fontSize: 20.0, color: isMe ? Colors.white : Colors.black87),
             )
