@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'category_screen.dart';
 
+final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
 class ItemListScreen extends StatefulWidget {
   static const String id = 'item__list_screen';
   final String category;
 
-  ItemListScreen({this.category});
+  ItemListScreen({this.category = 'books'});
 
   @override
   _ItemListScreenState createState() => _ItemListScreenState();
@@ -18,7 +19,6 @@ class ItemListScreen extends StatefulWidget {
 
 class _ItemListScreenState extends State<ItemListScreen> {
   final _auth = FirebaseAuth.instance;
-  final messageTextController = TextEditingController();
   String messageText;
 
   @override
@@ -43,25 +43,23 @@ class _ItemListScreenState extends State<ItemListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
+        title: Text('Items List'),
+        backgroundColor: Colors.lightBlueAccent,
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                _auth.signOut();
                 Navigator.of(context)
                     .popUntil(ModalRoute.withName(CategoryScreen.id));
               }),
         ],
-        title: Text('Items List'),
-        backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            ItemStream(),
+            ItemStream(collection: widget.category),
           ],
         ),
       ),
@@ -70,56 +68,59 @@ class _ItemListScreenState extends State<ItemListScreen> {
 }
 
 class ItemStream extends StatelessWidget {
+  final String collection;
+  ItemStream({this.collection});
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(builder: (context, snapshot) {
-      if (!snapshot.hasData) {
-        return Center(
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.lightBlueAccent,
-          ),
-        );
-      }
-      final items = snapshot.data.documents;
-      List<ItemBubble> ItemBubbles = [];
-//      for (var message in messages) {
-//        final itemBubble = ItemBubble(
-//            );
-//        ItemBubbles.add(ItemBubble);
-//      }
-      return Expanded(
-        child: ListView(
-          reverse: true,
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          children: ItemBubbles,
-        ),
-      );
-    });
+    return StreamBuilder<QuerySnapshot>(
+        stream: _firestore.collection(collection).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.lightBlueAccent,
+              ),
+            );
+          }
+          final items = snapshot.data.documents;
+          List<ItemBubble> ItemBubbles = [];
+          for (var item in items) {
+            final map = item.data;
+            final itemBubble = ItemBubble(
+              map: map,
+            );
+            ItemBubbles.add(itemBubble);
+          }
+          return Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              children: ItemBubbles,
+            ),
+          );
+        });
   }
 }
 
 class ItemBubble extends StatelessWidget {
-  final String name;
-  final String price;
-  final String year;
-  final bool isMe;
-
-  ItemBubble({this.name, this.year, this.price, this.isMe});
+  final Map<String, dynamic> map;
+  ItemBubble({this.map});
 
   @override
   Widget build(BuildContext context) {
+    bool isMe = loggedInUser == this.map['user'];
     return Padding(
-      padding: EdgeInsets.all(5.0),
-      child: Material(
-        color: isMe ? Colors.lightBlueAccent : Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-          child: Text(
-            '$year $name ask for \$ $price',
+      padding: EdgeInsets.all(2.0),
+      child: Container(
+        color: isMe ? Colors.lightBlueAccent : Colors.grey.shade300,
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        child: Wrap(children: [
+          Text(
+            '${map['title']}」ask for \$${map['price']}',
             style: TextStyle(
-                fontSize: 18.0, color: isMe ? Colors.white : Colors.black54),
-          ),
-        ),
+                fontSize: 20.0, color: isMe ? Colors.white : Colors.black87),
+          )
+        ]),
       ),
     );
   }
