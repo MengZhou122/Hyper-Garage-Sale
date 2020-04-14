@@ -1,4 +1,3 @@
-//import 'dart:html';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -110,7 +109,7 @@ class _PostScreenState extends State<PostScreen> {
       } else if (newPost.address == '👇 Get Address') {
         showErrorNotification(context, 'Please add address info!');
       } else {
-        await _firestore.collection('books').add({
+        await _firestore.collection(widget.category).add({
           'user': loggedInUser.email,
           'title': newPost.title,
           'price': newPost.price,
@@ -241,8 +240,6 @@ class _PostScreenState extends State<PostScreen> {
                             }
                           });
                         }
-                        //there is no camera on Simulator, cameras will be null，use NamedRoute instead
-                        //Navigator.pushNamed(context, CameraScreen.id);
                       },
                     ),
                   ],
