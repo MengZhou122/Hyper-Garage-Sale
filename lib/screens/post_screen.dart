@@ -227,8 +227,8 @@ class _PostScreenState extends State<PostScreen> {
                     ),
                     Text(
                         newPost.pictures.length == 0
-                            ? '       Add a Picture 👉'
-                            : ' Add another Picture 👉',
+                            ? '        Add a Picture 👉'
+                            : '  Add another Picture 👉',
                         style: TextStyle(fontSize: 18.0)),
                     FloatingActionButton(
                       child: Icon(Icons.add_a_photo),
