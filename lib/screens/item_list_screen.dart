@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hypergaragesale/screens/item_detail_screen.dart';
 
 import 'category_screen.dart';
 
@@ -108,19 +109,31 @@ class ItemBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isMe = loggedInUser == this.map['user'];
+    bool isMe = loggedInUser.email == this.map['user'];
     return Padding(
-      padding: EdgeInsets.all(2.0),
-      child: Container(
-        color: isMe ? Colors.lightBlueAccent : Colors.grey.shade300,
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-        child: Wrap(children: [
-          Text(
-            '${map['title']}」ask for \$${map['price']}',
-            style: TextStyle(
-                fontSize: 20.0, color: isMe ? Colors.white : Colors.black87),
-          )
-        ]),
+      padding: EdgeInsets.all(5.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ItemDetailScreen(
+                infoList: this.map,
+              ),
+            ),
+          );
+        },
+        child: Container(
+          color: isMe ? Colors.lightBlueAccent.shade200 : Colors.grey.shade300,
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+          child: Wrap(children: [
+            Text(
+              '【${map['title']}】for \$${map['price']}',
+              style: TextStyle(
+                  fontSize: 20.0, color: isMe ? Colors.white : Colors.black87),
+            )
+          ]),
+        ),
       ),
     );
   }
