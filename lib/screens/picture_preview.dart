@@ -28,6 +28,7 @@ class PicturePreviewScreen extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
+              SizedBox(width: 10.0),
               RoundedButton(
                 title: 'Use It',
                 width: 100.0,

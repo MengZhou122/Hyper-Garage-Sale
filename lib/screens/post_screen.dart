@@ -1,9 +1,11 @@
+//import 'dart:html';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:hypergaragesale/components/error_notification.dart';
@@ -136,7 +138,6 @@ class _PostScreenState extends State<PostScreen> {
                 TextCard(
                     label: 'Price',
                     price: true,
-                    numberKeyboard: true,
                     textIn: (newPrice) {
                       newPost.price = newPrice;
                     }),
@@ -151,7 +152,7 @@ class _PostScreenState extends State<PostScreen> {
                 //Text('${newPost.address} ${newPost.latitude} ${newPost.longtitude}'),
                 Container(
                     alignment: Alignment(-1.0, 0.0),
-                    height: 70.0,
+                    height: 80.0,
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     decoration: BoxDecoration(
                         border: Border.all(),
@@ -259,8 +260,8 @@ class PictureThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110.0,
-      width: 70.0,
+      height: 120.0,
+      width: 80.0,
       padding: const EdgeInsets.all(1.0),
       child: newPost.pictures.length <= pictureNumber
           ? null

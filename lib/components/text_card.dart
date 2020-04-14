@@ -3,24 +3,20 @@ import 'package:flutter/material.dart';
 class TextCard extends StatelessWidget {
   final String label;
   final bool price;
-  final bool numberKeyboard;
   final bool description;
   final Function textIn;
 
-  TextCard({
-    @required this.label,
-    @required this.textIn,
-    this.price,
-    this.description = false,
-    this.numberKeyboard = false,
-  });
+  TextCard(
+      {@required this.label,
+      @required this.textIn,
+      this.price = false,
+      this.description = false});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       showCursor: true,
-      autofocus: true,
-      keyboardType: numberKeyboard
+      keyboardType: price
           ? TextInputType.numberWithOptions(decimal: true)
           : TextInputType.text,
       minLines: description ? 1 : 1,
