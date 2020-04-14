@@ -5,7 +5,6 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:hypergaragesale/components/error_notification.dart';
@@ -29,7 +28,6 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   PostData newPost = PostData();
   Location userLocation = Location();
-  LocationData _locationData;
   bool showSpinner = false;
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
@@ -60,7 +58,7 @@ class _PostScreenState extends State<PostScreen> {
     }
   }
 
-  void messagesStream() async {
+  void itemStream() async {
     await for (var snapshot in _firestore.collection('books').snapshots()) {
       for (var message in snapshot.documents) {
         print(message.data);
@@ -68,11 +66,8 @@ class _PostScreenState extends State<PostScreen> {
     }
   }
 
-  Future<void> _getLocation() async {
-    _locationData = await userLocation.getLocation();
-  }
-
   Future<void> _updateAddress() async {
+    LocationData _locationData = await userLocation.getLocation();
     Coordinates coordinates =
         Coordinates(_locationData.latitude, _locationData.longitude);
     var addresses =
@@ -80,9 +75,11 @@ class _PostScreenState extends State<PostScreen> {
     var first = addresses.first;
     print('${first.featureName}');
     newPost.address = first.addressLine;
+    newPost.latitude = _locationData.latitude;
+    newPost.longitude = _locationData.longitude;
   }
 
-  void uploadImage() async {
+  Future<void> uploadImage() async {
     final StorageReference postImageRef =
         FirebaseStorage.instance.ref().child("zm_post_image");
 
@@ -100,6 +97,40 @@ class _PostScreenState extends State<PostScreen> {
         url = ImageUrl;
       });
       print("Image url = " + url);
+    }
+  }
+
+  Future<void> uploadPost() async {
+    try {
+      uploadImage();
+      if (newPost.title == '') {
+        showErrorNotification(context, 'Please input a title!');
+      } else if (newPost.price == '') {
+        showErrorNotification(context, 'Please give a estimate price!');
+      } else if (newPost.address == '👇 Get Address') {
+        showErrorNotification(context, 'Please add address info!');
+      } else {
+        await _firestore.collection('books').add({
+          'user': loggedInUser.email,
+          'title': newPost.title,
+          'price': newPost.price,
+          'description': newPost.description,
+          'address': newPost.address,
+          'longitude': newPost.longitude.toString(),
+          'latitude': newPost.latitude.toString(),
+          //'image_path': url
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ItemListScreen(
+              category: widget.category,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -170,13 +201,11 @@ class _PostScreenState extends State<PostScreen> {
                       child: Icon(Icons.room),
                       heroTag: 'address',
                       onPressed: () async {
-                        await _getLocation();
                         await _updateAddress();
                         setState(() {
-                          newPost.latitude = _locationData.latitude;
-                          newPost.longitude = _locationData.longitude;
-                          print(
-                              '${newPost.address}, ${newPost.latitude}, ${newPost.longitude}');
+                          showSpinner = false;
+//                          print(
+//                              '${newPost.address}, ${newPost.latitude}, ${newPost.longitude}');
                         });
                         //get address function, update the address widget
                       },
@@ -230,19 +259,17 @@ class _PostScreenState extends State<PostScreen> {
                 ),
                 SizedBox(height: 5.0),
                 RoundedButton(
-                    title: 'Post',
-                    color: Colors.lightBlueAccent,
-                    width: 120,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ItemListScreen(
-                            category: widget.category,
-                          ),
-                        ),
-                      );
-                    }),
+                  title: 'Post',
+                  color: Colors.lightBlueAccent,
+                  width: 120,
+                  onPressed: () async {
+                    await uploadPost();
+                    setState(() {
+                      showSpinner = false;
+                      newPost.address;
+                    });
+                  },
+                ),
               ],
             ),
           ),

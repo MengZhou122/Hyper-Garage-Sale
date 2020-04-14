@@ -16,6 +16,7 @@ class TextCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       showCursor: true,
+      autocorrect: true,
       keyboardType: price
           ? TextInputType.numberWithOptions(decimal: true)
           : TextInputType.text,

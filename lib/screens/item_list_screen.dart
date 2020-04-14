@@ -84,7 +84,7 @@ class ItemStream extends StatelessWidget {
               ),
             );
           }
-          final items = snapshot.data.documents;
+          final items = snapshot.data.documents.reversed;
           List<ItemBubble> ItemBubbles = [];
           for (var item in items) {
             final map = item.data;
