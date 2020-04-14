@@ -10,4 +10,5 @@ class PostData {
   double longitude;
 
   List<String> pictures = [];
+  List<String> urls = [];
 }

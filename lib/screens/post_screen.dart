@@ -97,7 +97,8 @@ class _PostScreenState extends State<PostScreen> {
           .child(timeKey.toString() + ".png")
           .putFile(File(image_path));
 
-      newPost.pictures.add(image_path);
+      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      newPost.urls.add(imageUrl);
     }
   }
 
@@ -119,10 +120,10 @@ class _PostScreenState extends State<PostScreen> {
           'address': newPost.address,
           'longitude': newPost.longitude.toString(),
           'latitude': newPost.latitude.toString(),
-          'picture0': newPost.pictures.length > 0 ? newPost.pictures[0] : ' ',
-          'picture1': newPost.pictures.length >= 2 ? newPost.pictures[1] : ' ',
-          'picture2': newPost.pictures.length >= 3 ? newPost.pictures[2] : ' ',
-          'picture3': newPost.pictures.length == 4 ? newPost.pictures[3] : ' ',
+          'picture0': newPost.pictures.length > 0 ? newPost.urls[0] : ' ',
+          'picture1': newPost.pictures.length >= 2 ? newPost.urls[1] : ' ',
+          'picture2': newPost.pictures.length >= 3 ? newPost.urls[2] : ' ',
+          'picture3': newPost.pictures.length == 4 ? newPost.urls[3] : ' ',
         });
 
         titleController.clear();

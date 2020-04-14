@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
               ),
               SizedBox(
-                height: 8.0,
+                height: 10.0,
               ),
               TextField(
                 controller: passwordController,
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: 'Enter your password'),
               ),
               SizedBox(
-                height: 8.0,
+                height: 20.0,
               ),
               RoundedButton(
                   color: Colors.lightBlueAccent,

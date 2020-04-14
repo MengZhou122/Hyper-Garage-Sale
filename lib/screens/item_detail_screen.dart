@@ -9,7 +9,7 @@ class ItemDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Items List'),
+        title: Text('Items Info'),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
