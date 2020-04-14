@@ -5,16 +5,20 @@ class TextCard extends StatelessWidget {
   final bool price;
   final bool description;
   final Function textIn;
+  final TextEditingController controller;
 
   TextCard(
       {@required this.label,
       @required this.textIn,
+      this.controller,
       this.price = false,
       this.description = false});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      autofocus: label == 'title',
       showCursor: true,
       autocorrect: true,
       keyboardType: price

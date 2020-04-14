@@ -27,10 +27,14 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   PostData newPost = PostData();
   Location userLocation = Location();
+  LocationData _locationData;
   bool showSpinner = false;
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
   FirebaseUser loggedInUser;
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   String url;
 
@@ -66,16 +70,21 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future<void> _updateAddress() async {
-    LocationData _locationData = await userLocation.getLocation();
-    Coordinates coordinates =
-        Coordinates(_locationData.latitude, _locationData.longitude);
-    var addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var first = addresses.first;
-    print('${first.featureName}');
-    newPost.address = first.addressLine;
-    newPost.latitude = _locationData.latitude;
-    newPost.longitude = _locationData.longitude;
+    print('in updateAddress block');
+    try {
+      _locationData = await userLocation.getLocation();
+      Coordinates coordinates =
+          Coordinates(_locationData.latitude, _locationData.longitude);
+      var addresses =
+          await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      var first = addresses.first;
+      print('${first.featureName}');
+      newPost.address = first.addressLine;
+      newPost.latitude = _locationData.latitude;
+      newPost.longitude = _locationData.longitude;
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> uploadImage() async {
@@ -103,11 +112,11 @@ class _PostScreenState extends State<PostScreen> {
     try {
       uploadImage();
       if (newPost.title == '') {
-        showErrorNotification(context, 'Please input a title!');
+        showErrorNotification(context, 'Please Give a Title!');
       } else if (newPost.price == '') {
-        showErrorNotification(context, 'Please give a estimate price!');
+        showErrorNotification(context, 'Please give a Estimate Price!');
       } else if (newPost.address == '👇 Get Address') {
-        showErrorNotification(context, 'Please add address info!');
+        showErrorNotification(context, 'Please Add Address Info!');
       } else {
         await _firestore.collection(widget.category).add({
           'user': loggedInUser.email,
@@ -119,6 +128,10 @@ class _PostScreenState extends State<PostScreen> {
           'latitude': newPost.latitude.toString(),
           //'image_path': url
         });
+        titleController.clear();
+        priceController.clear();
+        descriptionController.clear();
+        newPost = PostData();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -160,24 +173,30 @@ class _PostScreenState extends State<PostScreen> {
                   height: 10.0,
                 ),
                 TextCard(
-                    label: 'Title',
-                    textIn: (newTitle) {
-                      newPost.title = newTitle;
-                    }),
+                  label: 'Title',
+                  textIn: (newTitle) {
+                    newPost.title = newTitle;
+                  },
+                  controller: titleController,
+                ),
                 SizedBox(height: 10.0),
                 TextCard(
-                    label: 'Price',
-                    price: true,
-                    textIn: (newPrice) {
-                      newPost.price = newPrice;
-                    }),
+                  label: 'Price',
+                  price: true,
+                  textIn: (newPrice) {
+                    newPost.price = newPrice;
+                  },
+                  controller: priceController,
+                ),
                 SizedBox(height: 10.0),
                 TextCard(
-                    label: 'Description',
-                    description: true,
-                    textIn: (newDescription) {
-                      newPost.description = newDescription;
-                    }),
+                  label: 'Description',
+                  description: true,
+                  textIn: (newDescription) {
+                    newPost.description = newDescription;
+                  },
+                  controller: descriptionController,
+                ),
                 SizedBox(height: 10.0),
                 //Text('${newPost.address} ${newPost.latitude} ${newPost.longtitude}'),
                 Container(
@@ -201,10 +220,11 @@ class _PostScreenState extends State<PostScreen> {
                       heroTag: 'address',
                       onPressed: () async {
                         await _updateAddress();
+                        print('address updated!');
                         setState(() {
                           showSpinner = false;
-//                          print(
-//                              '${newPost.address}, ${newPost.latitude}, ${newPost.longitude}');
+                          print(
+                              '${newPost.address}, ${newPost.latitude}, ${newPost.longitude}');
                         });
                         //get address function, update the address widget
                       },
