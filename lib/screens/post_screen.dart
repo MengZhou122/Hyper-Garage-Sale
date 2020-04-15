@@ -99,8 +99,9 @@ class _PostScreenState extends State<PostScreen> {
           .putFile(File(image_path));
 
       imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-      newPost.urls.add(imageUrl);
+
     }
+    newPost.urls.add(imageUrl);
   }
 
   Future<void> uploadPost() async {
@@ -120,10 +121,10 @@ class _PostScreenState extends State<PostScreen> {
           'address': newPost.address,
           'longitude': newPost.longitude.toString(),
           'latitude': newPost.latitude.toString(),
-          'picture0': newPost.pictures.length > 0 ? newPost.urls[0] : ' ',
-          'picture1': newPost.pictures.length >= 2 ? newPost.urls[1] : ' ',
-          'picture2': newPost.pictures.length >= 3 ? newPost.urls[2] : ' ',
-          'picture3': newPost.pictures.length == 4 ? newPost.urls[3] : ' ',
+          'picture0': newPost.urls.length > 0 ? newPost.urls[0] : ' ',
+          'picture1': newPost.urls.length >= 2 ? newPost.urls[1] : ' ',
+          'picture2': newPost.urls.length >= 3 ? newPost.urls[2] : ' ',
+          'picture3': newPost.urls.length == 4 ? newPost.urls[3] : ' ',
         });
 
         titleController.clear();
