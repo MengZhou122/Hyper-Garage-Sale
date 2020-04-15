@@ -167,6 +167,7 @@ class _PostScreenState extends State<PostScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
+                SizedBox(height: 5.0),
                 TextCard(
                   label: 'Title',
                   textIn: (newTitle) {

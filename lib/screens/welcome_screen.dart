@@ -77,7 +77,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               },
             ),
             SizedBox(
-              height: 8.0,
+              height: 20.0,
             ),
             RoundedButton(
               color: Colors.blueAccent,
