@@ -104,7 +104,6 @@ class _PostScreenState extends State<PostScreen> {
 
   Future<void> uploadPost() async {
     try {
-      uploadImage();
       if (newPost.title == '') {
         showErrorNotification(context, 'Please Give a Title!');
       } else if (newPost.price == '') {
@@ -129,6 +128,7 @@ class _PostScreenState extends State<PostScreen> {
         titleController.clear();
         priceController.clear();
         descriptionController.clear();
+        thumbnails = [];
         newPost = PostData();
         Navigator.push(
           context,
@@ -162,14 +162,11 @@ class _PostScreenState extends State<PostScreen> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                SizedBox(
-                  height: 10.0,
-                ),
                 TextCard(
                   label: 'Title',
                   textIn: (newTitle) {
@@ -217,6 +214,9 @@ class _PostScreenState extends State<PostScreen> {
                       child: Icon(Icons.room),
                       heroTag: 'address',
                       onPressed: () async {
+                        setState(() {
+                          showSpinner = true;
+                        });
                         await _updateAddress();
                         print('address updated!');
                         setState(() {
@@ -280,6 +280,10 @@ class _PostScreenState extends State<PostScreen> {
                   color: Colors.lightBlueAccent,
                   width: 120,
                   onPressed: () async {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    await uploadImage();
                     await uploadPost();
                     setState(() {
                       showSpinner = false;
