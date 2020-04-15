@@ -25,7 +25,7 @@ class ItemDetailScreen extends StatelessWidget {
             Text(infoList['address']),
             Text(infoList['longitude']),
             Text(infoList['latitude']),
-            Text(infoList['picture0']),
+            Image.network(infoList['picture0']),
             Text(infoList['picture1']),
             Text(infoList['picture2']),
             Text(infoList['picture3']),
