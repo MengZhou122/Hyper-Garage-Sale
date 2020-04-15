@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hypergaragesale/screens/category_screen.dart';
-import 'package:hypergaragesale/screens/item_list_screen.dart';
 import 'package:hypergaragesale/screens/login_screen.dart';
-import 'package:hypergaragesale/screens/post_screen.dart';
 import 'package:hypergaragesale/screens/registration_screen.dart';
 import 'package:hypergaragesale/screens/welcome_screen.dart';
 
@@ -18,13 +16,6 @@ class HyperGS extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         CategoryScreen.id: (context) => CategoryScreen(),
-        PostScreen.id: (context) => PostScreen(
-              category: 'books',
-            ),
-        //delete after complete
-        ItemListScreen.id: (context) => ItemListScreen(
-              category: 'books',
-            ),
         //delete after complete
       },
     );

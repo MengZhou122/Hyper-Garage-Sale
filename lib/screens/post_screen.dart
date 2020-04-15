@@ -91,13 +91,14 @@ class _PostScreenState extends State<PostScreen> {
         FirebaseStorage.instance.ref().child("zm_post_images");
 
     var timeKey = new DateTime.now();
+    var imageUrl;
 
     for (String image_path in newPost.pictures) {
       final StorageUploadTask uploadTask = postImageRef
           .child(timeKey.toString() + ".png")
           .putFile(File(image_path));
 
-      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
       newPost.urls.add(imageUrl);
     }
   }
