@@ -32,6 +32,8 @@ class _PostScreenState extends State<PostScreen> {
   List<Widget> thumbnails = [];
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
+  final StorageReference postImageRef =
+      FirebaseStorage.instance.ref().child("zm_post_images");
   //FirebaseUser loggedInUser;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -87,21 +89,21 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future<void> uploadImage() async {
-    final StorageReference postImageRef =
-        FirebaseStorage.instance.ref().child("zm_post_images");
-
     var timeKey = new DateTime.now();
-    var imageUrl;
 
-    for (String image_path in newPost.pictures) {
-      final StorageUploadTask uploadTask = postImageRef
+    for (int i = 0; i < newPost.pictures.length; i++) {
+      String imagePath = newPost.pictures[i];
+      StorageUploadTask uploadTask = postImageRef
           .child(timeKey.toString() + ".png")
-          .putFile(File(image_path));
+          .putFile(File(imagePath));
 
-      imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
-
+      await uploadTask.onComplete;
+      postImageRef.getDownloadURL().then((imageUrl) {
+        setState(() {
+          newPost.urls.add(imageUrl);
+        });
+      });
     }
-    newPost.urls.add(imageUrl);
   }
 
   Future<void> uploadPost() async {
@@ -121,25 +123,11 @@ class _PostScreenState extends State<PostScreen> {
           'address': newPost.address,
           'longitude': newPost.longitude.toString(),
           'latitude': newPost.latitude.toString(),
-          'picture0': newPost.urls.length > 0 ? newPost.urls[0] : ' ',
-          'picture1': newPost.urls.length >= 2 ? newPost.urls[1] : ' ',
-          'picture2': newPost.urls.length >= 3 ? newPost.urls[2] : ' ',
-          'picture3': newPost.urls.length == 4 ? newPost.urls[3] : ' ',
+          'picture0': newPost.urls.length == 0 ? '0null' : newPost.urls[0],
+          'picture1': newPost.urls.length >= 1 ? '1null' : newPost.urls[1],
+          'picture2': newPost.urls.length >= 2 ? '2null' : newPost.urls[2],
+          'picture3': newPost.urls.length == 4 ? '3null' : newPost.urls[3],
         });
-
-        titleController.clear();
-        priceController.clear();
-        descriptionController.clear();
-        thumbnails = [];
-        newPost = PostData();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ItemListScreen(
-              category: widget.category,
-            ),
-          ),
-        );
       }
     } catch (e) {
       print(e);
@@ -238,6 +226,9 @@ class _PostScreenState extends State<PostScreen> {
                       child: Icon(Icons.add_a_photo),
                       heroTag: 'picture',
                       onPressed: () async {
+                        setState(() {
+                          showSpinner = true;
+                        });
                         if (newPost.pictures.length == 4) {
                           showErrorNotification(context, 'Maximun 4 Pictures!');
                         } else {
@@ -254,18 +245,19 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                           );
                           print(imagePath);
-                          setState(() {
-                            if (imagePath != null) {
-                              newPost.pictures.add(imagePath);
+                          if (imagePath != null) {
+                            newPost.pictures.add(imagePath);
 
-                              Container pictureC = Container(
-                                height: 120.0,
-                                width: 80.0,
-                                padding: const EdgeInsets.all(1.0),
-                                child: Image.file(File(imagePath)),
-                              );
-                              thumbnails.add(pictureC);
-                            }
+                            Container pictureC = Container(
+                              height: 120.0,
+                              width: 80.0,
+                              padding: const EdgeInsets.all(1.0),
+                              child: Image.file(File(imagePath)),
+                            );
+                            thumbnails.add(pictureC);
+                          }
+                          setState(() {
+                            showSpinner = false;
                           });
                         }
                       },
@@ -288,6 +280,19 @@ class _PostScreenState extends State<PostScreen> {
                     });
                     await uploadImage();
                     await uploadPost();
+                    titleController.clear();
+                    priceController.clear();
+                    descriptionController.clear();
+                    thumbnails = [];
+                    newPost = PostData();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ItemListScreen(
+                          category: widget.category,
+                        ),
+                      ),
+                    );
                     setState(() {
                       showSpinner = false;
                     });
