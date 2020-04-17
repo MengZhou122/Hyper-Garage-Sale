@@ -12,10 +12,7 @@ class TextPairBox extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          title,
-          style: TextStyle(fontSize: 12.0, color: Colors.black87),
-        ),
+        Text(title, style: TextStyle(fontSize: 12.0, color: Colors.black87)),
         SizedBox(height: 2.0),
         Material(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),

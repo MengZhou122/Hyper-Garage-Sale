@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -32,9 +33,7 @@ class _PostScreenState extends State<PostScreen> {
   List<Widget> thumbnails = [];
   final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
-  final StorageReference postImageRef =
-      FirebaseStorage.instance.ref().child("zm_post_images");
-  //FirebaseUser loggedInUser;
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -89,20 +88,22 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future<void> uploadImage() async {
+    final StorageReference postImageRef =
+        FirebaseStorage.instance.ref().child("zm_post_images");
+
     var timeKey = new DateTime.now();
 
     for (int i = 0; i < newPost.pictures.length; i++) {
-      String imagePath = newPost.pictures[i];
-      StorageUploadTask uploadTask = postImageRef
+      final StorageUploadTask uploadTask = postImageRef
           .child(timeKey.toString() + ".png")
-          .putFile(File(imagePath));
+          .putFile(File(newPost.pictures[i]));
 
       await uploadTask.onComplete;
-      postImageRef.getDownloadURL().then((imageUrl) {
-        setState(() {
-          newPost.urls.add(imageUrl);
-        });
-      });
+//main problem is here!!!
+      var imageUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+      //String imageUrl = await postImageRef.getDownloadURL();
+
+      newPost.urls.add(imageUrl);
     }
   }
 
@@ -123,10 +124,10 @@ class _PostScreenState extends State<PostScreen> {
           'address': newPost.address,
           'longitude': newPost.longitude.toString(),
           'latitude': newPost.latitude.toString(),
-          'picture0': newPost.urls.length == 0 ? '0null' : newPost.urls[0],
-          'picture1': newPost.urls.length >= 1 ? '1null' : newPost.urls[1],
-          'picture2': newPost.urls.length >= 2 ? '2null' : newPost.urls[2],
-          'picture3': newPost.urls.length == 4 ? '3null' : newPost.urls[3],
+          'picture0': newPost.urls.length < 1 ? ' ' : newPost.urls[0],
+          'picture1': newPost.urls.length < 2 ? ' ' : newPost.urls[1],
+          'picture2': newPost.urls.length < 3 ? ' ' : newPost.urls[2],
+          'picture3': newPost.urls.length < 4 ? ' ' : newPost.urls[3],
         });
       }
     } catch (e) {
