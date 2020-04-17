@@ -45,9 +45,7 @@ class _PostScreenState extends State<PostScreen> {
     newPost.category = widget.category;
   }
 
-  PostData newPostData = PostData();
-
-  void getCurrentUser() async {
+  Future<void> getCurrentUser() async {
     try {
       final user = await _auth.currentUser();
       if (user != null) {
@@ -58,14 +56,6 @@ class _PostScreenState extends State<PostScreen> {
       }
     } catch (e) {
       print(e);
-    }
-  }
-
-  void itemStream() async {
-    await for (var snapshot in _firestore.collection('books').snapshots()) {
-      for (var message in snapshot.documents) {
-        print(message.data);
-      }
     }
   }
 
@@ -88,15 +78,16 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   Future<void> uploadImage() async {
-    final StorageReference postImageRef =
-        FirebaseStorage.instance.ref().child("zm_post_images");
-
-    var timeKey = new DateTime.now();
-
     for (int i = 0; i < newPost.pictures.length; i++) {
-      final StorageUploadTask uploadTask = postImageRef
-          .child(timeKey.toString() + ".png")
-          .putFile(File(newPost.pictures[i]));
+      var timeKey = new DateTime.now();
+
+      StorageReference postImageRef = FirebaseStorage.instance
+          .ref()
+          .child("zm_post_images")
+          .child(timeKey.toString() + ".png");
+
+      StorageUploadTask uploadTask =
+          postImageRef.putFile(File(newPost.pictures[i]));
 
       await uploadTask.onComplete;
 //main problem is here!!!

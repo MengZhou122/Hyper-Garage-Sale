@@ -9,7 +9,6 @@ final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
 class ItemListScreen extends StatefulWidget {
-  static const String id = 'item__list_screen';
   final String category;
 
   ItemListScreen({this.category = 'books'});

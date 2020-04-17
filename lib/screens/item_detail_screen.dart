@@ -26,7 +26,6 @@ class ItemDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextPairBox(title: ' Owner', content: infoList['user']),
-
               Row(
                 children: <Widget>[
                   TextPairBox(title: ' Title', content: infoList['title']),
@@ -39,27 +38,30 @@ class ItemDetailScreen extends StatelessWidget {
                   title: ' Description', content: infoList['description']),
               TextPairBox(title: ' Address', content: infoList['address']),
               SizedBox(height: 5.0),
-              Text(infoList['picture0']),
-              Text('${infoList['picture1']} and this is 2nd picture'),
-              //Text('${infoList['picture3']}!!!!!'),
               Container(
                 height: infoList['picture0'] == ' ' ? 0 : 180,
                 child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
-                      infoList['picture0'] == ' '
-                          ? null
+                      infoList['picture0'] == ''
+                          ? Container()
                           : SmallPicture(
-                              tag: 'picture0',
-                              imagePath: infoList['picture0'],
-                            ),
+                              tag: 'picture0', imagePath: infoList['picture0']),
                       SizedBox(width: 5.0),
-                      infoList['picture0'] == ' '
-                          ? null
+                      infoList['picture1'] == ''
+                          ? Container()
                           : SmallPicture(
-                              tag: 'picture1',
-                              imagePath: infoList['picture0'],
-                            ),
+                              tag: 'picture1', imagePath: infoList['picture1']),
+                      SizedBox(width: 5.0),
+                      infoList['picture2'] == ''
+                          ? Container()
+                          : SmallPicture(
+                              tag: 'picture2', imagePath: infoList['picture2']),
+                      SizedBox(width: 5.0),
+                      infoList['picture3'] == ''
+                          ? Container()
+                          : SmallPicture(
+                              tag: 'picture3', imagePath: infoList['picture3']),
                     ]),
               ),
               SizedBox(height: 7.0),

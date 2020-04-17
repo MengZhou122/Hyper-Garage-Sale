@@ -5,7 +5,6 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
 class CameraScreen extends StatefulWidget {
-  static String id = 'camera_screen';
   final CameraDescription camera;
 
   const CameraScreen({Key key, this.camera}) : super(key: key);

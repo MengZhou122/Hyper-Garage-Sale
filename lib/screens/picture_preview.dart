@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hypergaragesale/components/rounded_button.dart';
 
 class PicturePreviewScreen extends StatelessWidget {
-  static String id = "picture";
   final String imagePath;
 
   const PicturePreviewScreen({Key key, this.imagePath}) : super(key: key);
