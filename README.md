@@ -19,7 +19,7 @@ This project is a Smartphone application for publish garage sale information.
 
 3. In Catagory Screen, there are six options. Without choose one of them, you can not go to next page. After selext a category, you can go to Post Screen for make a new publishment or Item List Screen to check available products.
 
-4. Post Screen will need to input prodcut info, address button will get publisher's location automatically after get permission, add picture button will active rear camera and lead to Camera Screen to take a picture(currently support upload up to 4 images).
+4. Post Screen will need to input prodcut info, address button will get publisher's location automatically after get permission, add picture button will active rear camera and lead to Camera Screen to take a picture(currently support upload up to 4 images). After post sucessfully, Item List Screen in same catefory will pop out for review, and you will find that your post is at the top of the list.
 
 5. Camera Screen will present the view of rear camera, press picture button for capture it and go to Pricture Pewview Screen.
 
