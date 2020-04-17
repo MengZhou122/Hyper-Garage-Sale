@@ -10,5 +10,6 @@ This project is a Smartphone application for publish garage sale information.
 
 2. Libraries and packages including Location, Geolocator, FireBase (Auth, FireStore), Google Map, etc.
 
-## Screen Route Navigation Logic:
-
+# Screen Route Navigation Logic:
+![Image if Navigation Logic]
+(https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20logic.png)
