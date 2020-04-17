@@ -10,7 +10,7 @@ class HyperGS extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: WelcomeScreen.id, //CategoryScreen.id,
+      initialRoute: CategoryScreen.id, //CategoryScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
