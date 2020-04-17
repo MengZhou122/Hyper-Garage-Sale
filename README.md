@@ -17,7 +17,7 @@ This project is a Smartphone application to publish garage sale information.
 
 2. Login / Register Screen needs to input email and the correct password for authentication. After that, the Category Screen will be popped out.
 
-3. In Catagory Screen, there are six options. Without choose one of them, you can not go to the next page. After selecting a category, you can go to Post Screen to make a new publishment or Item List Screen to check available products.
+3. In Category Screen, there are six options. Without choose one of them, you can not go to the next page. After selecting a category, you can go to Post Screen to make a new post or Item List Screen to check available products.
 
 4. Post Screen will need to input product info, address button will get publisher's location automatically after getting permission, add picture button will active rear camera and lead to Camera Screen to take a picture(currently support upload up to 4 images). After post successfully, Item List Screen in the same category will pop out for review, and you will find that your post is at the top of the list.
 
