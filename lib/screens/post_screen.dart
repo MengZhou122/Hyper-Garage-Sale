@@ -100,27 +100,19 @@ class _PostScreenState extends State<PostScreen> {
 
   Future<void> uploadPost() async {
     try {
-      if (newPost.title == '') {
-        showErrorNotification(context, 'Please Give a Title!');
-      } else if (newPost.price == '') {
-        showErrorNotification(context, 'Please give a Estimate Price!');
-      } else if (newPost.address == '👇 Get Address') {
-        showErrorNotification(context, 'Please Add Address Info!');
-      } else {
-        await _firestore.collection(widget.category).add({
-          'user': loggedInUser.email,
-          'title': newPost.title,
-          'price': newPost.price,
-          'description': newPost.description,
-          'address': newPost.address,
-          'longitude': newPost.longitude.toString(),
-          'latitude': newPost.latitude.toString(),
-          'picture0': newPost.urls.length < 1 ? ' ' : newPost.urls[0],
-          'picture1': newPost.urls.length < 2 ? ' ' : newPost.urls[1],
-          'picture2': newPost.urls.length < 3 ? ' ' : newPost.urls[2],
-          'picture3': newPost.urls.length < 4 ? ' ' : newPost.urls[3],
-        });
-      }
+      await _firestore.collection(widget.category).add({
+        'user': loggedInUser.email,
+        'title': newPost.title,
+        'price': newPost.price,
+        'description': newPost.description,
+        'address': newPost.address,
+        'longitude': newPost.longitude.toString(),
+        'latitude': newPost.latitude.toString(),
+        'picture0': newPost.urls.length < 1 ? ' ' : newPost.urls[0],
+        'picture1': newPost.urls.length < 2 ? ' ' : newPost.urls[1],
+        'picture2': newPost.urls.length < 3 ? ' ' : newPost.urls[2],
+        'picture3': newPost.urls.length < 4 ? ' ' : newPost.urls[3],
+      });
     } catch (e) {
       print(e);
     }
@@ -263,33 +255,42 @@ class _PostScreenState extends State<PostScreen> {
                 ),
                 SizedBox(height: 5.0),
                 RoundedButton(
-                  title: 'Post',
-                  color: Colors.lightBlueAccent,
-                  width: 120,
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    await uploadImage();
-                    await uploadPost();
-                    titleController.clear();
-                    priceController.clear();
-                    descriptionController.clear();
-                    thumbnails = [];
-                    newPost = PostData();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ItemListScreen(
-                          category: widget.category,
-                        ),
-                      ),
-                    );
-                    setState(() {
-                      showSpinner = false;
-                    });
-                  },
-                ),
+                    title: 'Post',
+                    color: Colors.lightBlueAccent,
+                    width: 120,
+                    onPressed: () async {
+                      if (newPost.title == '') {
+                        showErrorNotification(context, 'Please Give a Title!');
+                      } else if (newPost.price == '') {
+                        showErrorNotification(
+                            context, 'Please give a Estimate Price!');
+                      } else if (newPost.address == '👇 Get Address') {
+                        showErrorNotification(
+                            context, 'Please Add Address Info!');
+                      } else {
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        await uploadImage();
+                        await uploadPost();
+                        titleController.clear();
+                        priceController.clear();
+                        descriptionController.clear();
+                        thumbnails = [];
+                        newPost = PostData();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ItemListScreen(
+                              category: widget.category,
+                            ),
+                          ),
+                        );
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      }
+                    }),
               ],
             ),
           ),
