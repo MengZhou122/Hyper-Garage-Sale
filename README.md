@@ -4,7 +4,7 @@ A new Flutter application.
 
 ## Getting Started
 
-This project is a Smartphone application to publish garage sale information.
+This project is a Smartphone application to publish and share garage sale information.
 
 1. After loading the project into IDE, click 'get packages' which is highlighted under the toolbar to load packages and libraries.
 
