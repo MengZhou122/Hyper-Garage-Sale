@@ -4,13 +4,13 @@ A new Flutter application.
 
 ## Getting Started
 
-This project is a Smartphone application to publish garage sale information.
+This project is a Smartphone application to publish and share garage sale information.
 
 1. After loading the project into IDE, click 'get packages' which is highlighted under the toolbar to load packages and libraries.
 
 2. Libraries and packages including Location, Geolocator, Firebase (Auth, FireStore), Google Map, etc.
 
-## Screen Route Navigation Logic:
+## Screen Routes Control Flow:
 ![Image if Navigation Logic](https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20Logic.png)
 
 1. Welcome Screen is the entrance of the app and gives two options: Login or Register, two FloatingActionButton will lead to related pages.
@@ -29,4 +29,4 @@ This project is a Smartphone application to publish garage sale information.
 
 8. Item Detail Screen presents the post detail information. A list of pictures is encapsulated in an Animator for Zoom up. A Google Map widget is added at the bottom to present the publisher's location.
 
-Enjoy coding! --zm
+Happy coding! --zm
