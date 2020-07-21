@@ -10,7 +10,7 @@ Interacted with GPS module to retrieve users’ location, activated cameras and 
 
 Integrated with geocoder package and Google map API to present users’ location in text and graphic format
 
-![Operations](https://drive.google.com/uc?id=1ZUi4-_ZdnJzL06aWfaOR1yc8Qbq0b5My)
+![Operations](https://drive.google.com/uc?id=1ZUi4-_ZdnJzL06aWfaOR1yc8Qbq0b5My){:height="50%" width="50%"}
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This project is a Smartphone application to publish and share garage sale inform
 2. Libraries and packages including Location, Geolocator, Firebase (Auth, FireStore), Google Map, etc.
 
 ## Screen Routes Control Flow:
-![Image of Navigation Logic](https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20Logic.png){:height="50%" width="50%"}
+![Image of Navigation Logic](https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20Logic.png)
 
 1. Welcome Screen is the entrance of the app and gives two options: Login or Register, two FloatingActionButton will lead to related pages.
 
