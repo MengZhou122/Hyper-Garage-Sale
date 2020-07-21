@@ -1,4 +1,4 @@
-# hypergaragesale
+# Garage Sale Application Development and Design
 
 Smartphone Sales Advertisement App with Flutter and Dart, compatible with Android and IOS platforms
 
