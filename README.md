@@ -21,7 +21,7 @@ This project is a Smartphone application to publish and share garage sale inform
 2. Libraries and packages including Location, Geolocator, Firebase (Auth, FireStore), Google Map, etc.
 
 ## Screen Routes Control Flow:
-![Image of Navigation Logic](https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20Logic.png)
+![Image of Navigation Logic](https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20Logic.png){:height="50%" width="50%"}
 
 1. Welcome Screen is the entrance of the app and gives two options: Login or Register, two FloatingActionButton will lead to related pages.
 
