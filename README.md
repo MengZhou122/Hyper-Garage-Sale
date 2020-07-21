@@ -10,8 +10,6 @@ Interacted with GPS module to retrieve users’ location, activated cameras and 
 
 Integrated with geocoder package and Google map API to present users’ location in text and graphic format
 
-![Operations](https://drive.google.com/uc?id=1ZUi4-_ZdnJzL06aWfaOR1yc8Qbq0b5My |width=100)
-
 ## Getting Started
 
 This project is a Smartphone application to publish and share garage sale information.
