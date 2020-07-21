@@ -10,7 +10,7 @@ Interacted with GPS module to retrieve users’ location, activated cameras and 
 
 Integrated with geocoder package and Google map API to present users’ location in text and graphic format
 
-![Operations](https://drive.google.com/uc?id=1ZUi4-_ZdnJzL06aWfaOR1yc8Qbq0b5My){:height="50%" width="50%"}
+![Operations](https://drive.google.com/uc?id=1ZUi4-_ZdnJzL06aWfaOR1yc8Qbq0b5My|height="50%" width="50%")
 
 ## Getting Started
 
