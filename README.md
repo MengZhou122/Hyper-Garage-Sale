@@ -1,6 +1,16 @@
 # hypergaragesale
 
-A new Flutter application.
+Smartphone Sales Advertisement App with Flutter and Dart, compatible with Android and IOS platforms
+
+Associated with Firebase packages for user authentication(firebase-auth) and data storage (cloud-firebase)
+
+Implemented posts page auto-synchronization and refreshing by deploying StreamBuilder and QuerySnapshot classes
+
+Interacted with GPS module to retrieve users’ location, activated cameras and album for taking & uploading pictures
+
+Integrated with geocoder package and Google map API to present users’ location in text and graphic format
+
+![Operations](https://drive.google.com/uc?id=1ZUi4-_ZdnJzL06aWfaOR1yc8Qbq0b5My)
 
 ## Getting Started
 
