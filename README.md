@@ -37,4 +37,4 @@ This project is a Smartphone application to publish and share garage sale inform
 
 8. Item Detail Screen presents the post detail information. A list of pictures is encapsulated in an Animator for Zoom up. A Google Map widget is added at the bottom to present the publisher's location.
 
-Happy coding! --zm
+Happy coding!
